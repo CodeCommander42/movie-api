@@ -20,5 +20,8 @@
   "homepage": "https://github.com/CodeCommander42/movie-api#readme",
   "dependencies": {
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0"
   }
 }
