@@ -18,8 +18,12 @@ let topBooks = [
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!!!');
-})
+});
 
 app.get('/movies', (req, res) => {
   res.json(topBooks);
-})
+});
+
+app.listen(8080, () => {
+  console.log('Your app is listening on port 8080');
+});
