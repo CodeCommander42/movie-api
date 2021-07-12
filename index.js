@@ -16,6 +16,10 @@ let topBooks = [
   },
 ]
 
+app.get('/', (req, res) => {
+  res.send('Welcome to myFlix!!!');
+})
+
 app.get('/movies', (req, res) => {
   res.json(topBooks);
 })
