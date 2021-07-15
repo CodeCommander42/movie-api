@@ -28,35 +28,35 @@ app.get('/movies', (req, res) => {
 });
 
 app.get('/movies/:details', (req, res) => {
-  // movies details
+  res.send('details of this movie based on the title');
 });
 
 app.get('/movies/:details/:genre', (req, res) => {
-  // genre 
+  res.send('what genre the movie is');
 });
 
 app.get('movies/:details/:director', (req, res) => {
-  // director details
+  res.send('details of the director of the movie');
 });
 
 app.post('/user/:registration', (req,res) => {
-  // user registration
+  res.send('user has been successfuly registered');
 });
 
 app.put('/user/:usernameChange', (req, res) => {
-  //username change
+  res.send('username has been successfuly changed');
 });
 
 app.put('user/:addFavorite', (req, res) => {
-  //add movie to favorites 
+  res.send('your movie has been successfuly been added to your favorites');
 });
 
 app.put('user/:removeFavorite', (req, res) => {
-  // remove movie from favorites 
+  res.send('the movie has been successfuly removed from your favorites');
 });
 
 app.delete('user/:unregister', (req, res) => {
-  // user unresgistration
+  res.send('you have successfuly been unregistered');
 });
 
 app.listen(8080, () => {
