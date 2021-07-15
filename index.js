@@ -12,7 +12,7 @@ let movieList = [
     director: 'Peter Jackson'
   },
   {
-    title: 'Star wars',
+    title: 'Star Wars',
     release: 'May 25, 1977',
     director: 'George Lucas'
   },
@@ -23,39 +23,31 @@ let movieList = [
   }
 ];
 
-app.get('/movies/:details', (req, res) => {
-  res.send('details of this movie based on the title');
-});
-
 app.get('/movies', (req, res) => {
   res.json(movieList);
 });
 
-app.get('/movies/:details/:genre', (req, res) => {
-  res.send('what genre the movie is');
+app.get('/movies/by-title/:title', (req, res) => {
+  res.send('details of this movie like genre and director based on the title!!!!!!!!!');
 });
 
-app.get('movies/:details/:director', (req, res) => {
-  res.send('details of the director of the movie');
-});
-
-app.post('/user/:registration', (req,res) => {
+app.post('/user/registration/:register', (req,res) => {
   res.send('user has been successfuly registered');
 });
 
-app.put('/user/:usernameChange', (req, res) => {
+app.put('/user/usernameChange/:usernameChange', (req, res) => {
   res.send('username has been successfuly changed');
 });
 
-app.put('user/:addFavorite', (req, res) => {
+app.put('user/addFavorite/:addFavorite', (req, res) => {
   res.send('your movie has been successfuly been added to your favorites');
 });
 
-app.put('user/:removeFavorite', (req, res) => {
+app.put('user/removeFavorite/:removeFavorite', (req, res) => {
   res.send('the movie has been successfuly removed from your favorites');
 });
 
-app.delete('user/:unregister', (req, res) => {
+app.delete('user/unregister/:unregister', (req, res) => {
   res.send('you have successfuly been unregistered');
 });
 
