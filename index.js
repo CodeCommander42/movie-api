@@ -1,5 +1,5 @@
 const express = require('express'),
-  bodyParser = require('body-parser'),
+  bodyParser = require('body-parser')
   
 const app = express();
 
@@ -23,12 +23,12 @@ let movieList = [
   }
 ];
 
-app.get('/movies', (req, res) => {
-  res.json(movieList);
-});
-
 app.get('/movies/:details', (req, res) => {
   res.send('details of this movie based on the title');
+});
+
+app.get('/movies', (req, res) => {
+  res.json(movieList);
 });
 
 app.get('/movies/:details/:genre', (req, res) => {
