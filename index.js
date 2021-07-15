@@ -21,11 +21,42 @@ let movieList = [
     release: 'March 31, 1999',
     director: 'The Wachowskis'
   }
-]
-
+];
 
 app.get('/movies', (req, res) => {
   res.json(movieList);
+});
+
+app.get('/movies/:details', (req, res) => {
+  // movies details
+});
+
+app.get('/movies/:details/:genre', (req, res) => {
+  // genre 
+});
+
+app.get('movies/:details/:director', (req, res) => {
+  // director details
+});
+
+app.post('/user/:registration', (req,res) => {
+  // user registration
+});
+
+app.put('/user/:usernameChange', (req, res) => {
+  //username change
+});
+
+app.put('user/:addFavorite', (req, res) => {
+  //add movie to favorites 
+});
+
+app.put('user/:removeFavorite', (req, res) => {
+  // remove movie from favorites 
+});
+
+app.delete('user/:unregister', (req, res) => {
+  // user unresgistration
 });
 
 app.listen(8080, () => {
