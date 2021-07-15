@@ -39,15 +39,15 @@ app.put('/user/usernameChange/:usernameChange', (req, res) => {
   res.send('username has been successfuly changed');
 });
 
-app.put('user/addFavorite/:addFavorite', (req, res) => {
-  res.send('your movie has been successfuly been added to your favorites');
+app.put('/user/addFavorite/:addFavorite', (req, res) => {
+  res.send('your movie has been successfuly added to your favorites');
 });
 
-app.put('user/removeFavorite/:removeFavorite', (req, res) => {
+app.put('/user/removeFavorite/:removeFavorite', (req, res) => {
   res.send('the movie has been successfuly removed from your favorites');
 });
 
-app.delete('user/unregister/:unregister', (req, res) => {
+app.delete('/user/unregister/:unregister', (req, res) => {
   res.send('you have successfuly been unregistered');
 });
 
