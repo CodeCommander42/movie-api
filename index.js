@@ -1,37 +1,31 @@
 const express = require('express'),
-  morgan = require('morgan');
+  bodyParser = require('body-parser'),
+  
 const app = express();
 
-let topBooks = [
-  {
-    title: 'Harry Potter',
-    author: 'J.K. Rowling'
-  },
+app.use(bodyParser.json());
+
+let movieList = [
   {
     title: 'Lord of the Rings',
-    author: 'J.R.R Tolkien'
+    release: 'December 9, 2001',
+    director: 'Peter Jackson'
   },
   {
-    title: 'Twilight',
-    author: 'Stephanie Meyer'
+    title: 'Star wars',
+    release: 'May 25, 1977',
+    director: 'George Lucas'
   },
+  {
+    title: 'The Matrix',
+    release: 'March 31, 1999',
+    director: 'The Wachowskis'
+  }
 ]
 
-app.use(morgan('common'));
-
-app.get('/', (req, res) => {
-  res.send('Welcome to myFlix!!!');
-});
 
 app.get('/movies', (req, res) => {
-  res.json(topBooks);
-});
-
-app.use(express.static('public'));
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.json(movieList);
 });
 
 app.listen(8080, () => {
