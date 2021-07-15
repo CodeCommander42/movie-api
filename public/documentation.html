@@ -6,6 +6,33 @@
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+
+    <!-- returns the list of movies -->
+    <h1>localhost:8080/movies</h1>
+
+    <!-- returns data about the movie by title -->
+    <h1>localhost:8080/movies/:details</h1>
+
+    <!-- returns data about the genre of the movie -->
+    <h1>localhost:8080/movies/:details/:genre</h1>
+
+    <!-- returns data about the director of the movie -->
+    <h1>localhost:8080/movies/:details/:director</h1>
+
+    <!-- new user registration-->
+    <h1>localhost:8080/user/:register</h1>
+
+    <!-- allow user to change username -->
+    <h1>localhost:8080/user/:usernameChange</h1>
+
+    <!-- allow user to add a movie to their list of favorites -->
+    <h1>localhost:8080/user/:addFavorite</h1>
+
+    <!-- allow user to remove movie from list of favorites -->
+    <h1>localhost:8080/user/:removeFavorite</h1>
+
+    <!-- allow exitsting user to unreigister -->
+    <h1>localhost:8080/user/:unregister</h1>
+
   </body>
 </html>
