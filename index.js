@@ -1,9 +1,17 @@
 const express = require('express'),
   bodyParser = require('body-parser')
+
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
   
 const app = express();
 
 app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let movieList = [
   {
