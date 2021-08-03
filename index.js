@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
-const Users = Models.User;
+const User = Models.User;
   
 const app = express();
 
@@ -13,50 +13,133 @@ app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-let movieList = [
-  {
-    title: 'Lord of the Rings',
-    release: 'December 9, 2001',
-    director: 'Peter Jackson'
-  },
-  {
-    title: 'Star Wars',
-    release: 'May 25, 1977',
-    director: 'George Lucas'
-  },
-  {
-    title: 'The Matrix',
-    release: 'March 31, 1999',
-    director: 'The Wachowskis'
-  }
-];
 
 app.get('/movies', (req, res) => {
-  res.json(movieList);
+  Movies.find()
+  .then((movies) => {
+    res.status(200).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  })
 });
 
-app.get('/movies/by-title/:title', (req, res) => {
-  res.send('details of this movie like genre and director based on the title!!!!!!!!!');
+app.get('/movies/:title', (req, res) => {
+  Movies.findOne({title: req.params.title})
+  .then((movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  })
 });
 
-app.post('/user/registration/:register', (req,res) => {
-  res.send('user has been successfuly registered');
+app.get('/user/list', (req, res) => {
+  User.find()
+  .then((users) => 
+  {
+    res.status(200).json(users);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  })
+})
+
+app.post('/user/registration', (req,res) => {
+  User.findOne({username: req.body.username})
+  .then((user) => {
+    if (user) {
+      return res.status(400).send(req.body.username + ' already exists')
+    }
+    else {
+      User.create({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        bithday: req.body.birthday
+    })
+      .then((user) => {
+        res.status(201).json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      })
+    }
+  })
 });
 
-app.put('/user/usernameChange/:usernameChange', (req, res) => {
-  res.send('username has been successfuly changed');
+app.put('/user/usernameChange/:username', (req, res) => {
+  User.findOneAndUpdate(
+    {username: req.params.username},
+    {$set: {
+      username: req.body.username
+    }
+  },
+    {new: true},
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } 
+      else {
+        res.json(updatedUser);
+      }
+    }
+  )
 });
 
-app.put('/user/addFavorite/:addFavorite', (req, res) => {
-  res.send('your movie has been successfuly added to your favorites');
+app.put('/user/:username/addFavorite/:addFavorite', (req, res) => {
+  User.findOneAndUpdate(
+    {username: req.params.username},
+    {$push: {favoriteMovies: req.params.addFavorite}},
+    {new: true},
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      }
+      else {
+        res.json(updatedUser);
+      }
+    }
+  )
 });
 
-app.put('/user/removeFavorite/:removeFavorite', (req, res) => {
-  res.send('the movie has been successfuly removed from your favorites');
+app.put('/user/:username/removeFavorite/:removeFavorite', (req, res) => {
+  User.findOneAndUpdate(
+    {username: req.params.username},
+    {$pull: {favoriteMovies: req.params.removeFavorite}},
+    {new: true},
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(400).send(req.params.removeFavorite + ' was not found');
+      }
+      else {
+        res.json(updatedUser);
+      }
+    }
+  )
 });
 
-app.delete('/user/unregister/:unregister', (req, res) => {
-  res.send('you have successfuly been unregistered');
+app.delete('/user/unregister/:username', (req, res) => {
+  User.findOneAndRemove({username: req.params.username})
+  .then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.username + ' was not found');
+    }
+    else {
+      res.status(200).send(req.params.username + ' was deleted');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
 app.listen(8080, () => {
