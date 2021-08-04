@@ -1,5 +1,8 @@
 const express = require('express'),
   bodyParser = require('body-parser')
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -14,7 +17,7 @@ app.use(bodyParser.json());
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(200).json(movies);
@@ -25,7 +28,7 @@ app.get('/movies', (req, res) => {
   })
 });
 
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({title: req.params.title})
   .then((movie) => {
     res.json(movie);
@@ -36,7 +39,7 @@ app.get('/movies/:title', (req, res) => {
   })
 });
 
-app.get('/user/list', (req, res) => {
+app.get('/user/list', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.find()
   .then((users) => 
   {
@@ -72,7 +75,7 @@ app.post('/user/registration', (req,res) => {
   })
 });
 
-app.put('/user/usernameChange/:username', (req, res) => {
+app.put('/user/usernameChange/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndUpdate(
     {username: req.params.username},
     {$set: {
@@ -92,7 +95,7 @@ app.put('/user/usernameChange/:username', (req, res) => {
   )
 });
 
-app.put('/user/:username/addFavorite/:addFavorite', (req, res) => {
+app.put('/user/:username/addFavorite/:addFavorite', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndUpdate(
     {username: req.params.username},
     {$push: {favoriteMovies: req.params.addFavorite}},
@@ -109,7 +112,7 @@ app.put('/user/:username/addFavorite/:addFavorite', (req, res) => {
   )
 });
 
-app.put('/user/:username/removeFavorite/:removeFavorite', (req, res) => {
+app.put('/user/:username/removeFavorite/:removeFavorite', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndUpdate(
     {username: req.params.username},
     {$pull: {favoriteMovies: req.params.removeFavorite}},
@@ -126,7 +129,7 @@ app.put('/user/:username/removeFavorite/:removeFavorite', (req, res) => {
   )
 });
 
-app.delete('/user/unregister/:username', (req, res) => {
+app.delete('/user/unregister/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndRemove({username: req.params.username})
   .then((user) => {
     if (!user) {
