@@ -1,3 +1,5 @@
 node_modules
 DBbackup/myFlixDB
 DBbackup/myFlixDBMongoEx.json
+DB/movies.json
+DB/users.json
