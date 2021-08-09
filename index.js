@@ -60,6 +60,7 @@ app.get('/user/list', passport.authenticate('jwt', { session: false }), (req, re
 })
 
 app.post('/user/registration', (req,res) => {
+  let hashedPassword = users.hashPassword(req.body.password);
   User.findOne({username: req.body.username})
   .then((user) => {
     if (user) {
@@ -68,7 +69,7 @@ app.post('/user/registration', (req,res) => {
     else {
       User.create({
         username: req.body.username,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         bithday: req.body.birthday
     })
