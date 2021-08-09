@@ -59,8 +59,18 @@ app.get('/user/list', passport.authenticate('jwt', { session: false }), (req, re
   })
 })
 
-app.post('/user/registration', (req,res) => {
-  let hashedPassword = users.hashPassword(req.body.password);
+app.post('/user/registration',[check('username', 'username is required').isLength({min:5}),
+check('username','username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+check('password', 'password is required').not().isEmpty(),
+check('email','email does not appear to be valid').isEmail()
+], (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array() });
+  }
+
+  let hashedPassword = User.hashPassword(req.body.password);
   User.findOne({username: req.body.username})
   .then((user) => {
     if (user) {
@@ -154,6 +164,7 @@ app.delete('/user/unregister/:username', passport.authenticate('jwt', { session:
   });
 });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
