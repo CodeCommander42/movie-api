@@ -26,6 +26,10 @@ let auth = require('./auth')(app);
 /*-local/mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });*/
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+app.get('/', (req,res) => {
+  res.send('Welcome to my flix!')
+})
+
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
