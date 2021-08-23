@@ -48,7 +48,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
   })
 });
 
-app.get('/user/list', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/user/list', /* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   User.find()
   .then((users) => 
   {
