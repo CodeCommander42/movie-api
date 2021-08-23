@@ -1,8 +1,8 @@
-const express = require('express'),
-  bodyParser = require('body-parser'),
-  const passport = require('passport'),
-  const cors = require('cors'),
-  const mongoose = require('mongoose'),
+const express = require('express');
+  bodyParser = require('body-parser');
+  const passport = require('passport');
+  const cors = require('cors');
+  const mongoose = require('mongoose');
   const { check, validationResult } = require('express-validator');
 
 const app = express();
@@ -14,6 +14,7 @@ require('./passport');
 
 app.use(bodyParser.json());
 
+// for local runs mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const Models = require('./models.js');
