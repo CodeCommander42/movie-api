@@ -1,7 +1,9 @@
 const express = require('express'),
   bodyParser = require('body-parser')
-  
 
+  const cors = require('cors');
+app.use(cors());
+  
 const passport = require('passport');
 require('./passport');
 
@@ -15,9 +17,6 @@ const User = Models.User;
 const app = express();
 
 const { check, validationResult } = require('express-validator');
-
-const cors = require('cors');
-app.use(cors());
 
 app.use(bodyParser.json());
 let auth = require('./auth')(app);
