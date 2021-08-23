@@ -8,14 +8,13 @@ const express = require('express'),
 const app = express();
 
 app.use(cors());
+let auth = require('./auth')(app);
   
 require('./passport');
 
 app.use(bodyParser.json());
 
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-let auth = require('./auth')(app);
 
 const Models = require('./models.js');
 
