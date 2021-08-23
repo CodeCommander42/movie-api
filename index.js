@@ -10,23 +10,20 @@ const passport = require('passport');
 require('./passport');
 
 const mongoose = require('mongoose');
+  
+const { check, validationResult } = require('express-validator');
+
+app.use(bodyParser.json());
+
+/*-local/mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });*/
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+let auth = require('./auth')(app);
+
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const User = Models.User;
-  
-
-
-const { check, validationResult } = require('express-validator');
-
-
-
-app.use(bodyParser.json());
-let auth = require('./auth')(app);
-
-
-/*-local/mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });*/
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.get('/', (req,res) => {
   res.send('Welcome to my flix!')
