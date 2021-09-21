@@ -62,6 +62,17 @@ app.get('/user/list', /* passport.authenticate('jwt', { session: false }),*/ (re
   })
 })
 
+app.get('/user/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  User.findOne({username: req.params.username})
+  .then((user) => {
+    res.status(200).json(user);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  })
+})
+
 app.post('/user/registration',[check('username', 'username is required').isLength({min:5}),
 check('username','username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
 check('password', 'password is required').not().isEmpty(),
