@@ -62,7 +62,7 @@ app.get('/user/list', /* passport.authenticate('jwt', { session: false }),*/ (re
   })
 })
 
-app.get('/user/profile/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/user/profile/:username', (req, res) => {
   User.findOne({username: req.params.username})
   .then((user) => {
     res.status(200).json(user);
