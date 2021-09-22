@@ -111,9 +111,6 @@ check('email','email does not appear to be valid').isEmail()
 app.put('/user/userinfoChange/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndUpdate(
     {username: req.params.username},
-    {password: req.params.password},
-    {email: req.params.email},
-    {birthday: req.params.birthday},
     {$set: {
       username: req.body.username,
       password: req.body.password,
