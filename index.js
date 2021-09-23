@@ -148,7 +148,7 @@ app.put('/user/:username/addFavorite/:addFavorite', passport.authenticate('jwt',
   )
 });
 
-app.put('/user/:username/removeFavorite/:removeFavorite', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/user/:username/removeFavorite/:removeFavorite', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.findOneAndUpdate(
     {username: req.params.username},
     {$pull: {favoriteMovies: req.params.removeFavorite}},
