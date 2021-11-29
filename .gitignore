@@ -3,3 +3,5 @@ DBbackup/myFlixDB
 DBbackup/myFlixDBMongoEx.json
 DB/movies.json
 DB/users.json
+package-lock.json
+package-lock.json
